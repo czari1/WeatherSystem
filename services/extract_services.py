@@ -23,11 +23,11 @@ class ExtractService:
             response = requests.get(url, params=params)
             response.raise_for_status()
 
-            logger.info(f"Downloaded weather data for {city['nane']}, {city['country']}")
+            logger.info(f"Downloaded weather data for {city['name']}, {city['country']}")
 
             return response.json
         except requests.exceptions.RequestException as e:
-            logger.error(f"Error for downloading weather data for {city['nane']}, {city['country']}")
+            logger.error(f"Error for downloading weather data for {city['name']}, {city['country']}")
 
             return None
         

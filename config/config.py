@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-WEATHER_API_KEY = os.getenv("WEATHER_API_KEY", "twój_klucz_api")  
-WEATHER_API_BASE_URL = "https://api.openweathermap.org/data/2.5"
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY", "ATC465VQCZFY55CF8VLE5AAKZ")  
+WEATHER_API_BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/"
 
 
 CITIES = [

@@ -10,7 +10,7 @@ Base = declarative_base()
 class WeatherDataTable(Base):
     __tablename__ = 'weather_data'
     
-    id = Column(Integer, primatry_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     city_name = Column(String(50),nullable=False )
     country = Column(String, nullable=False)
     temperature = Column(Float, nullable=False)
