@@ -19,7 +19,7 @@ st.title("Weather ETL")
 cities = WeatherRepository.get_cities_with_data()
 
 if not cities:
-    st.error("No data in database. Execute ETL process to dowload weather data")
+    st.error("No data in database. Execute ETL process to download weather data")
     st.stop()
 
 selected_city = st.sidebar.selectbox("Choose city", cities)
@@ -61,7 +61,7 @@ if latest_data is not None:
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        st.metric("Temperatura", f"{latest_data['temperature']:.1f}°C", 
+        st.metric("Temperature", f"{latest_data['temperature']:.1f}°C", 
                   f"{latest_data['temperature'] - stats['temperature']['avg']:.1f}°C")
     
     with col2:
@@ -88,7 +88,7 @@ temp_chart = alt.Chart(df).mark_line().encode(
 st.altair_chart(temp_chart, use_container_width=True)
 
 st.header("Humidity and pressure")
-col1, col2 =st.columns(2)
+col1, col2 = st.columns(2)
 
 with col1:
     humidity_chart = alt.Chart(df).mark_area(opacity=0.7).encode(
@@ -104,7 +104,7 @@ with col1:
 with col2:
     pressure_chart = alt.Chart(df).mark_line(color='red').encode(
         x=alt.X('timestamp:T', title='Date and hour'),
-        y=alt.Y('pressure:Q', title='Pressure(hPa)', scale=alt.Scale(domain=[0,100])),
+        y=alt.Y('pressure:Q', title='Pressure(hPa)'),  
         tooltip=['timestamp:T', 'pressure:Q']
     ).properties(
         height=300,

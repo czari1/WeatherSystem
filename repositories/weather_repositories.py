@@ -9,15 +9,15 @@ class WeatherRepository:
 
     @staticmethod
     def save_weather_data(weather_data: WeatherData) -> int:
-        session = get_session
+        session = get_session()
 
         try:
             db_weather_data = WeatherDataTable(
                 city_name = weather_data.city_name,
                 country = weather_data.country,
-                temperatue = weather_data.temperature,
+                temperature = weather_data.temperature,
                 feels_like = weather_data.feels_like,
-                humidity = weather_data.feels_like,
+                humidity = weather_data.humidity,
                 pressure = weather_data.pressure,
                 wind_speed = weather_data.wind_speed,
                 wind_direction = weather_data.wind_direction,
@@ -35,6 +35,7 @@ class WeatherRepository:
             return db_weather_data.id
         except Exception as e:
             session.rollback()
+            raise
         finally:
             session.close()
 
@@ -55,6 +56,7 @@ class WeatherRepository:
                     'id': result.id,
                     'city_name': result.city_name,
                     'country': result.country,
+                    'temperature': result.temperature,
                     'feels_like': result.feels_like,
                     'humidity': result.humidity,
                     'pressure': result.pressure,
@@ -84,8 +86,8 @@ class WeatherRepository:
         try:
             results = session.query(WeatherDataTable).filter(
                 WeatherDataTable.city_name == city_name,
-                WeatherDataTable.timestamp == start_date,
-                WeatherDataTable.timestamp == end_time
+                WeatherDataTable.timestamp >= start_date,
+                WeatherDataTable.timestamp <= end_time
             ).order_by(
                 WeatherDataTable.timestamp
             ).all()
@@ -94,6 +96,7 @@ class WeatherRepository:
                 'id': result.id,
                 'city_name': result.city_name,
                 'country': result.country,
+                'temperature': result.temperature,
                 'feels_like': result.feels_like,
                 'humidity': result.humidity,
                 'pressure': result.pressure,
@@ -123,13 +126,13 @@ class WeatherRepository:
                 func.avg(WeatherDataTable.temperature).label('avg_temp'),
             ).filter(
                 WeatherDataTable.city_name == city_name,
-                WeatherDataTable.timestamp == start_date,
-                WeatherDataTable.timestamp == end_date
+                WeatherDataTable.timestamp >= start_date,
+                WeatherDataTable.timestamp <= end_date
             ).group_by(
                 func.date(WeatherDataTable.timestamp)
             ).order_by(
                 func.date(WeatherDataTable.timestamp)
-            ),all()
+            ).all()
 
             return [{'date': str(date), 
                     'avg_temperature': float(avg_temp)}

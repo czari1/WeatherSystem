@@ -22,8 +22,8 @@ class WeatherDataTable(Base):
     weather_condition = Column(String(50), nullable=False)
     weather_description = Column(String(200), nullable=False)
     clouds = Column(Integer, nullable=False)
-    rain_1h = Column(Float,nullable=False)
-    snow_1h = Column(Float,nullable=False)
+    rain_1h = Column(Float,nullable=True)
+    snow_1h = Column(Float,nullable=True)
     timestamp = Column(DateTime, nullable=False, index=True)
 
 def init_db():
