@@ -104,7 +104,7 @@ with col1:
 with col2:
     pressure_chart = alt.Chart(df).mark_line(color='red').encode(
         x=alt.X('timestamp:T', title='Date and hour'),
-        y=alt.Y('pressure:Q', title='Pressure(hPa)'),  
+        y=alt.Y('pressure:Q', title='Pressure(hPa)', scale=alt.Scale(zero=False)),  
         tooltip=['timestamp:T', 'pressure:Q']
     ).properties(
         height=300,
